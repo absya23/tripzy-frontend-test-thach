@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Spin } from 'antd';
+import dayjs from 'dayjs';
 
 function SearchResults() {
 	const searchParams = useSearchParams();
@@ -13,9 +14,14 @@ function SearchResults() {
 	const ret = searchParams.get('ret');
 	const pax = searchParams.get('pax');
 
+	const formatDate = (dateString: string | null) => {
+		if (!dateString) return 'N/A';
+		return dayjs(dateString).format('DD/MM/YYYY');
+	};
+
 	return (
 		<div className="flex w-full flex-col items-center">
-			<div className="mt-20 w-full max-w-6xl">
+			<div className="mt-20 w-full max-w-7xl">
 				<div className="min-h-[600px] rounded-xl bg-white p-10 shadow-lg">
 					<div className="space-y-4 text-lg font-bold">
 						<p className="mb-5">
@@ -23,10 +29,10 @@ function SearchResults() {
 						</p>
 						<p className="mb-5">
 							To:  {to || 'N/A'} </p>
-						<p className="mb-5">
-							Departure date: {dep || 'N/A'}</p>
+						{dep && <p className="mb-5">
+							Departure date: {formatDate(dep)}</p>}
 						{ret && <p className="mb-5">
-							Return date: {ret || 'N/A'}</p>}
+							Return date: {formatDate(ret)}</p>}
 						<p className="mb-5">
 							No. of passenger: {pax || 'N/A'}</p>
 					</div>

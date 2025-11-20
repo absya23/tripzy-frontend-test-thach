@@ -11,9 +11,9 @@ import {
     Checkbox,
     message,
     Input,
+    type GetRef,
 } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import PickerRef from 'antd/es/date-picker';
 import {
     CalendarOutlined,
     CarFilled,
@@ -23,6 +23,8 @@ import {
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { locations, Location } from '@/app/data/locations';
+
+type DatePickerRef = GetRef<typeof DatePicker>;
 
 interface FormValues {
     from?: string;
@@ -49,9 +51,10 @@ const renderItemOption = (title: string, subTitle: string) => ({
 export default function SearchFormBus() {
     const router = useRouter();
     const [isRoundTrip, setIsRoundTrip] = useState(false);
-    const depPickerRef = useRef<PickerRef | null>(null);
-    const retPickerRef = useRef<PickerRef | null>(null);
+    const depPickerRef = useRef<DatePickerRef | null>(null);
+    const retPickerRef = useRef<DatePickerRef | null>(null);
     const [form] = Form.useForm<FormValues>();
+    const [messageApi, contextHolder] = message.useMessage();
 
     const disabledDateToday = (current: dayjs.Dayjs) => {
         return current && current < dayjs().startOf('day');
@@ -85,33 +88,33 @@ export default function SearchFormBus() {
         const toVal = String(values.to ?? '').trim();
 
         if (!fromVal || !toVal) {
-            message.error('From and To are required');
+            messageApi.error('From and To are required');
             return false;
         }
 
         if (fromVal.toLowerCase() === toVal.toLowerCase()) {
-            message.error('From and To must be different');
+            messageApi.error('From and To must be different');
             return false;
         }
 
         if (!values.departureDate) {
-            message.error('Departure date is required');
+            messageApi.error('Departure date is required');
             return false;
         }
 
         if (isRoundTrip) {
             if (!values.returnDate) {
-                message.error('Return date is required');
+                messageApi.error('Return date is required');
                 return false;
             }
             if (values.returnDate && values.departureDate && values.returnDate.isBefore(values.departureDate, 'day')) {
-                message.error('Return date must be same or after departure date');
+                messageApi.error('Return date must be same or after departure date');
                 return false;
             }
         }
 
         if (!values.passengers || values.passengers < 1) {
-            message.error('Passengers must be at least 1');
+            messageApi.error('Passengers must be at least 1');
             return false;
         }
 
@@ -141,7 +144,6 @@ export default function SearchFormBus() {
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
-                    initialValues={{ passengers: 1 }}
                 >
                     <div className="flex gap-4 items-start">
                         <div className="flex-3 flex items-start gap-2">
@@ -232,7 +234,7 @@ export default function SearchFormBus() {
                                 name="departureDate"
                                 label={<span className="text-desc font-medium text-xs">DEPARTURE DATE</span>}
                                 className="flex-1 mb-0!"
-                                rules={[{ required: true, message: 'Please enter departure date' }]}
+                                rules={[{ required: true, message: 'Please select departure date' }]}
                                 validateTrigger={['onChange', 'onBlur']}
                             >
                                 <div className="picker-with-icon">
@@ -273,7 +275,7 @@ export default function SearchFormBus() {
                                 }
                                 name="returnDate"
                                 className="flex-1 mb-0!"
-                                rules={isRoundTrip ? [{ required: true, message: 'Please enter returnDate' }] : []}
+                                rules={isRoundTrip ? [{ required: true, message: 'Please select return date' }] : []}
                                 validateTrigger={['onChange', 'onBlur']}
                             >
                                 <div className={`picker-with-icon ${!isRoundTrip ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -320,8 +322,8 @@ export default function SearchFormBus() {
                             </Form.Item>
                         </div>
                     </div>
-
                     <div className="text-center mt-6">
+                        {contextHolder}
                         <Button
                             type="primary"
                             shape="round"
