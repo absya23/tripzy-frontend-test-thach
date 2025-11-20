@@ -1,7 +1,11 @@
+# Tripzy Frontend Test - Nguyen Chau Thach
+
+This is a Front-end project developed to fulfill the requirements of the Tripzy test. The project builds a bus/shuttle ticket search interface based on the provided Figma design, utilizing Next.js (App Router), Ant Design, and Tailwind CSS.
+
 ## Demo
 
-- **Live Demo:** ......
-- **Repository:** ......
+- **Live Demo:** [Vercel Link](https://tripzy-frontend-test-thach.vercel.app/)
+- **Repository:** [Repository Link](https://github.com/absya23/tripzy-frontend-test-thach)
 
 ## Tech Stack
 
@@ -89,6 +93,15 @@ Ensure your machine has Node.js installed (v18+ recommended).
 - The Main Layout and static parts remain Server Components to optimize initial performance (FCP).
 
 ## Completed Features
+
+- [x] Interface matching Figma design.
+- [x] **Bus & Shuttle Tab:**
+  - [x] Location Autocomplete (From/To) from JSON file.
+  - [x] DatePicker (Departure/Return).
+  - [x] Validation: Return date >= Departure date.
+  - [x] Validation: Passengers >= 1.
+- [x] **Hotel & Flight Tabs:** Displays "No data".
+- [x] **Search Result Page:** Displays information parsed from URL params.
 
 ---
 
