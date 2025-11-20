@@ -14,7 +14,7 @@ The project utilizes the following core technologies:
 - **Core:** [Next.js 16](https://nextjs.org/) (App Router), [TypeScript](https://www.typescriptlang.org/).
 - **UI Component:** [Ant Design 5.28.1](https://ant.design/).
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) (Layout & Spacing utility) combined with Ant Design Theme.
-- **Icon:** Lucide React / Ant Design Icons.
+- **Icon:** Ant Design Icons.
 - **State Management:** URL Search Params (Native Next.js hooks).
 - **Deploy:** Vercel.
 
