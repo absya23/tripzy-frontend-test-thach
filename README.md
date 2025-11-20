@@ -21,8 +21,7 @@ Ensure your machine has Node.js installed (v18+ recommended).
 1.  **Clone repository:**
 
     ```bash
-    git clone [https://github.com/](https://github.com/)[username]/tripzy-frontend-test-[your-name].git
-    cd tripzy-frontend-test-[your-name]
+    git clone https://github.com/absya23/tripzy-frontend-test-thach.git
     ```
 
 2.  **Install dependencies:**
